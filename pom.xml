@@ -91,6 +91,13 @@
             <version>9.3.6.v20151106</version>
         </dependency>-->
 
+        <!--utils-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+
         <!--testing-->
         <dependency>
             <groupId>org.testng</groupId>

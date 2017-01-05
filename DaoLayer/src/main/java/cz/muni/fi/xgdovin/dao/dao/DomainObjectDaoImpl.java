@@ -1,6 +1,8 @@
 package cz.muni.fi.xgdovin.dao.dao;
 
 import cz.muni.fi.xgdovin.dao.domain.DomainObject;
+import cz.muni.fi.xgdovin.dao.utils.QueryValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,9 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private QueryValidator queryValidator;
 
     @SuppressWarnings("unchecked")
     public E findByUUid(UUID uuid) {
@@ -45,11 +50,13 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
 
     @SuppressWarnings("unchecked")
     public E findByProperties(Map<String, Object> properties) {
+        queryValidator.validateQueryParameters(getRealClass(), properties);
         return (E) createParametrizedQueryFromMap(properties).getSingleResult();
     }
 
     @SuppressWarnings("unchecked")
     public List<E> findAllByProperties(Map<String, Object> properties) {
+        queryValidator.validateQueryParameters(getRealClass(), properties);
         return (List<E>) createParametrizedQueryFromMap(properties).getResultList();
     }
 
@@ -74,12 +81,12 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
         return sb.toString();
     }
 
-    private Class<?> getRealClass() {
+    private Class<? extends DomainObject> getRealClass() {
         try {
             Type sooper = getClass().getGenericSuperclass();
             Type t = ((ParameterizedType)sooper).getActualTypeArguments()[0];
 
-            return (Class.forName(t.toString()));
+            return (Class<? extends DomainObject>) Class.forName(t.toString());
         }
         catch (ClassNotFoundException e) {
             throw new IllegalStateException("Impossible to detect real class behind generics");
