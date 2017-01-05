@@ -18,7 +18,6 @@ import static org.junit.Assert.fail;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:dao-context.xml")
 public class PersonDaoTest {
 
     @Autowired

@@ -12,7 +12,6 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:dao-context.xml")
 public class QueryValidatorTest {
 
     @Autowired

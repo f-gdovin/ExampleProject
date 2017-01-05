@@ -11,5 +11,20 @@
 
     <artifactId>RESTLayer</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>cz.muni.fi.xgdovin</groupId>
+            <artifactId>ServiceLayer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--Spring-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

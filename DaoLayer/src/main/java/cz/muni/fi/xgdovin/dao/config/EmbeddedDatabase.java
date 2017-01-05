@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackages="cz.muni.fi.xgdovin.dao")
 public class EmbeddedDatabase {
 
     @Bean

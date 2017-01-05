@@ -1,4 +1,4 @@
-package service;
+package cz.muni.fi.xgdovin.service.service;
 
 import cz.muni.fi.xgdovin.dao.dao.DomainObjectDao;
 import cz.muni.fi.xgdovin.dao.domain.DomainObject;
@@ -21,12 +21,14 @@ public class DomainObjectServiceImpl<E extends DomainObject> implements DomainOb
         return domainObjectDao.findById(id);
     }
 
-    public void create(E e) {
+    public E create(E e) {
         domainObjectDao.create(e);
+        return this.findById(e.getId());
     }
 
-    public void update(E e) {
+    public E update(E e) {
         domainObjectDao.update(e);
+        return this.findById(e.getId());
     }
 
     public void delete(E e) {

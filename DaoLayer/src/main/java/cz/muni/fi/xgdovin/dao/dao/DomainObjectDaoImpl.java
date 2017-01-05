@@ -3,6 +3,7 @@ package cz.muni.fi.xgdovin.dao.dao;
 import cz.muni.fi.xgdovin.dao.domain.DomainObject;
 import cz.muni.fi.xgdovin.dao.utils.QueryValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+@Primary
 @Repository
 @Transactional
 public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObjectDao<E> {

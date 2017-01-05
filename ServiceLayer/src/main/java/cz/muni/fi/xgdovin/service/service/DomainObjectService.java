@@ -1,4 +1,4 @@
-package service;
+package cz.muni.fi.xgdovin.service.service;
 
 import cz.muni.fi.xgdovin.dao.domain.DomainObject;
 
@@ -19,15 +19,17 @@ public interface DomainObjectService<E extends DomainObject> {
      * Creates new entity.
      *
      * @param e the entity to be put into DB
+     * @return created entity
      */
-    void create(E e);
+    E create(E e);
 
     /**
      * Updates the entity.
      *
      * @param e the entity in DB to be updated
+     * @return updated entity
      */
-    void update(E e);
+    E update(E e);
 
     /**
      * Deletes the entity from DB.
