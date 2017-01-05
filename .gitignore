@@ -95,8 +95,4 @@ hs_err_pid*
 DaoLayer/DaoLayer.iml
 ExampleProject.iml
 RESTLayer/RESTLayer.iml
-RESTLayer/src/
 ServiceLayer/ServiceLayer.iml
-ServiceLayer/src/main/resources/
-ServiceLayer/src/test/
-src/
