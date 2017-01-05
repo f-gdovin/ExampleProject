@@ -13,7 +13,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Repository
 @Transactional
@@ -26,8 +25,8 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
     private QueryValidator queryValidator;
 
     @SuppressWarnings("unchecked")
-    public E findByUUid(UUID uuid) {
-        return (E) em.find(getRealClass(), uuid);
+    public E findById(long id) {
+        return (E) em.find(getRealClass(), id);
     }
 
     public void create(E e) {
@@ -74,7 +73,7 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
         StringBuilder sb = new StringBuilder("");
         for (String key : properties.keySet()) {
             if (!sb.toString().isEmpty()) {
-                sb.append("and");
+                sb.append(" and ");
             }
             sb.append(key).append("= :").append(key);
         }
@@ -82,14 +81,9 @@ public class DomainObjectDaoImpl<E extends DomainObject> implements DomainObject
     }
 
     private Class<? extends DomainObject> getRealClass() {
-        try {
-            Type sooper = getClass().getGenericSuperclass();
-            Type t = ((ParameterizedType)sooper).getActualTypeArguments()[0];
+        Type sooper = getClass().getGenericSuperclass();
+        Type t = ((ParameterizedType)sooper).getActualTypeArguments()[0];
 
-            return (Class<? extends DomainObject>) Class.forName(t.toString());
-        }
-        catch (ClassNotFoundException e) {
-            throw new IllegalStateException("Impossible to detect real class behind generics");
-        }
+        return (Class<? extends DomainObject>) t;
     }
 }

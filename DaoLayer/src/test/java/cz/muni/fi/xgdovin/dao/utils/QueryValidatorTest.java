@@ -8,9 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-import static org.testng.Assert.*;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:dao-context.xml")
@@ -29,7 +28,7 @@ public class QueryValidatorTest {
     @Test
     public void whenValidProperty_thenValidationPasses() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", UUID.randomUUID());
+        properties.put("id", 5L);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
     }
@@ -37,7 +36,7 @@ public class QueryValidatorTest {
     @Test
     public void whenMoreValidProperties_thenValidationPasses() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", UUID.randomUUID());
+        properties.put("id", 5L);
         properties.put("someBool", false);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
@@ -46,7 +45,7 @@ public class QueryValidatorTest {
     @Test
     public void whenMoreValidPropertiesUnboxingNeeded_thenValidationPasses() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", UUID.randomUUID());
+        properties.put("id", 5L);
         properties.put("someBool", Boolean.FALSE);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
@@ -55,7 +54,7 @@ public class QueryValidatorTest {
     @Test
     public void whenMoreValidPropertiesImplicitCastNeeded_thenValidationPasses() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", UUID.randomUUID());
+        properties.put("id", 5L);
         properties.put("someDouble", 1);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
@@ -64,7 +63,7 @@ public class QueryValidatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenInvalidPropertyName_thenExceptionIsThrown() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid2", UUID.randomUUID());
+        properties.put("id2", 5L);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
         fail();
@@ -73,7 +72,7 @@ public class QueryValidatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenInvalidPropertyType_thenExceptionIsThrown() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", "string instead of UUID");
+        properties.put("id", "string instead of long");
 
         queryValidator.validateQueryParameters(TestClass.class, properties);
         fail();
@@ -82,7 +81,7 @@ public class QueryValidatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenInvalidPropertyTypeExplicitCastNeeded_thenExceptionIsThrown() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("uuid", UUID.randomUUID());
+        properties.put("id", 5L);
         properties.put("someInt", 1.5);
 
         queryValidator.validateQueryParameters(TestClass.class, properties);

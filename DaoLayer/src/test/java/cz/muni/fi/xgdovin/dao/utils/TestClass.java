@@ -2,11 +2,9 @@ package cz.muni.fi.xgdovin.dao.utils;
 
 import cz.muni.fi.xgdovin.dao.domain.DomainObject;
 
-import java.util.UUID;
-
 class TestClass implements DomainObject {
 
-    private UUID uuid;
+    private long id;
 
     private boolean someBool;
 
@@ -16,8 +14,8 @@ class TestClass implements DomainObject {
 
     private double someDouble;
 
-    public TestClass(UUID uuid, boolean someBool, String someText, int someInt, double someDouble) {
-        this.uuid = uuid;
+    public TestClass(long id, boolean someBool, String someText, int someInt, double someDouble) {
+        this.id = id;
         this.someBool = someBool;
         this.someText = someText;
         this.someInt = someInt;
@@ -25,8 +23,8 @@ class TestClass implements DomainObject {
     }
 
     @Override
-    public UUID getUuid() {
-        return uuid;
+    public long getId() {
+        return id;
     }
 
     public boolean isSomeBool() {

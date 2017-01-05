@@ -1,14 +1,13 @@
 package cz.muni.fi.xgdovin.dao.domain;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
-public class User implements DomainObject {
+public class Person implements DomainObject {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private UUID uuid;
+    private long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -29,8 +28,8 @@ public class User implements DomainObject {
     @Column(nullable = false)
     private boolean isAdmin;
 
-    public UUID getUuid() {
-        return uuid;
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {

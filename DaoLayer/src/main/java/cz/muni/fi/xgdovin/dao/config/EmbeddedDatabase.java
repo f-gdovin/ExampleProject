@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -23,7 +22,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @EnableJpaRepositories
 @ComponentScan(basePackages="cz.muni.fi.xgdovin.dao")
-public class EmbeddedDerbyDatabase {
+public class EmbeddedDatabase {
 
     @Bean
     public JpaTransactionManager transactionManager(){
@@ -37,10 +36,11 @@ public class EmbeddedDerbyDatabase {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        jpaFactoryBean.setDataSource(db());
+        jpaFactoryBean.setDataSource(dataSource());
         jpaFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
         jpaFactoryBean.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
         jpaFactoryBean.setPersistenceXmlLocation("classpath:META-INF/persistence.xml");
+//        jpaFactoryBean.setPackagesToScan(getClass().getPackage().getName());
         jpaFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         return jpaFactoryBean;
     }
@@ -50,7 +50,7 @@ public class EmbeddedDerbyDatabase {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(true);
         hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setDatabase(Database.DERBY);
+        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
         return hibernateJpaVendorAdapter;
     }
 
@@ -64,9 +64,12 @@ public class EmbeddedDerbyDatabase {
     }
 
     @Bean
-    public DataSource db(){
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        builder.setName("ExampleProjectDB");
-        return builder.setType(EmbeddedDatabaseType.DERBY).build();
+    public DataSource dataSource() {
+        DriverManagerDataSource driver = new DriverManagerDataSource();
+        driver.setDriverClassName("org.postgresql.Driver");
+        driver.setUrl("jdbc:postgresql://localhost:5432/ExampleProjectDB");
+        driver.setUsername("postgres");
+        driver.setPassword("postgres");
+        return driver;
     }
 }

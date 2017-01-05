@@ -4,17 +4,16 @@ import cz.muni.fi.xgdovin.dao.domain.DomainObject;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public interface DomainObjectService<E extends DomainObject> {
 
     /**
      * Finds entity by id.
      *
-     * @param uuid the uuid of desired entity
-     * @return the entity with given uuid, or null if there is none
+     * @param id the long id of desired entity
+     * @return the entity with given id, or null if there is none
      */
-    E findByUUid(UUID uuid);
+    E findById(long id);
 
     /**
      * Creates new entity.
